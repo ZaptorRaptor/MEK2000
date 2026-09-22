@@ -9,8 +9,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Punkt
-x = [1, 2.5, 3]
-y = [3, 4, 4.5]
+x = [1, 1.5, 2.5, 4]
+y = [3, 3.2, 5, 6]
 
 ########### Slutt på input ##################
 
