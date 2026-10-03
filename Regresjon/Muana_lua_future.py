@@ -16,7 +16,7 @@ h = 0.0001 #den lille verdien for midtpunktsformelen for numerisk derivasjon
 def S(a,b,c,d,f): #definerer funksjonen for summen av a,b,c,d,f
     return sum((Y-(a+b*X+c*np.sin(d*X+f)))**2)
 
-iterations = 1000000 #antall ganger for løkken skal kjøre og prøve å få en nærmere gjettning
+iterations = 100000 #antall ganger for løkken skal kjøre og prøve å få en nærmere gjettning
 def find_parameters(a,b,c,d,f,iterations,h,dif):
     for n in range(iterations): #bruker midtpunktsmetoden for numerisk derivasjon for å finne verdier for a,b,c,d,f som gjør at alle de delvis deriverte kommer så nærme 0 som mulig.
         da = (S(a+h, b, c, d, f) - S(a-h, b, c, d, f)) / (2*h)
@@ -31,35 +31,21 @@ def find_parameters(a,b,c,d,f,iterations,h,dif):
         d -= dif * dd
         f -= dif * df
     return a,b,c,d,f
-    
 a, b, c, d, f = find_parameters(a,b,c,d,f,iterations,h,dif) #kjører funksjonen returnerer variablene og definerer de nye verdiene globalt
 
 print(f"a={a:.4f}, b={b:.4f}, c={c:.4f}, d={d:.4f}, f={f:.4f}")  # skriver ut koeffisientene i terminalen
+x_smooth = np.linspace(5, 6, 1000)
+#formula for the linear regression with the sinus term
+X_Y_sinreg = a + b*x_smooth + c*np.sin(d*x_smooth + f)
+
+CO2_start_of_2027 = a + b*5 + c*np.sin(d*5 + f)
+print(f"the CO2 concentration on muana loa at new year this year (1.jan.2027) is {CO2_start_of_2027:.5f}")
 
 plt.title("CO2 levels in Muana lua")
 plt.xlabel("Years")
 plt.ylabel("CO2, ppm")
 plt.grid()
-#plots the datapoints from the Datasett2.dat file
-plt.scatter(X,Y, color="#014D4E")
-
-N=len(X)
-X_bar = sum(X)/N
-Y_bar = sum(Y)/N
-#formula for calculating linear regresion (taken from lecture notes)
-b_lin = sum((X-X_bar)*(Y-Y_bar)) / sum((X-X_bar)**2)
-a_lin = Y_bar - b_lin * X_bar
-X_Y_linreg = a_lin + b_lin*X
-#prints the coefficients
-print(f"a_lin = {a_lin:.2f}, b_lin = {b_lin:.2f}")
-
-#plots the linear regresion done on the Datasett2.dat file
-plt.plot(X, X_Y_linreg, color="#8B0000")
-
-#formula for the linear regression with the sinus term
-X_Y_sinreg = a + b*X + c*np.sin(d*X + f)
-
 #plotting the graph with the sinus term
-plt.plot (X, X_Y_sinreg)
+plt.plot (x_smooth, X_Y_sinreg, color="hotpink")
 
 plt.show()
