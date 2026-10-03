@@ -7,6 +7,7 @@ plt.title("CO2 levels in Muana lua")
 plt.xlabel("Years")
 plt.ylabel("CO2, ppm")
 plt.grid()
+#plots the datapoints from the Datasett2.dat file
 plt.scatter(X,Y, color="#014D4E")
 
 N=len(X)
@@ -18,7 +19,9 @@ Y_bar = sum(Y)/N
 b = sum((X-X_bar)*(Y-Y_bar)) / sum((X-X_bar)**2)
 a = Y_bar - b * X_bar
 X_Y_reg = a + b*X
+#prints the coefficients
 print(f"a = {a:.2f}, b = {b:.2f}")
 
+#plots the linear regresion done on the Datasett2.dat file
 plt.plot(X, X_Y_reg, color="#8B0000")
 plt.show()
