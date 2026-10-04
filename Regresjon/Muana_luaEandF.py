@@ -16,7 +16,7 @@ h = 0.0001 #den lille verdien for midtpunktsformelen for numerisk derivasjon
 def S(a,b,c,d,f): #definerer funksjonen for summen av a,b,c,d,f
     return sum((Y-(a+b*X+c*np.sin(d*X+f)))**2)
 
-iterations = 1000000 #antall ganger for løkken skal kjøre og prøve å få en nærmere gjettning
+iterations = 100000 #antall ganger for løkken skal kjøre og prøve å få en nærmere gjettning
 def find_parameters(a,b,c,d,f,iterations,h,dif):
     for n in range(iterations): #bruker midtpunktsmetoden for numerisk derivasjon for å finne verdier for a,b,c,d,f som gjør at alle de delvis deriverte kommer så nærme 0 som mulig.
         da = (S(a+h, b, c, d, f) - S(a-h, b, c, d, f)) / (2*h)
@@ -56,10 +56,12 @@ print(f"a_lin = {a_lin:.2f}, b_lin = {b_lin:.2f}")
 #plots the linear regresion done on the Datasett2.dat file
 plt.plot(X, X_Y_linreg, color="#8B0000")
 
+x_smooth = np.linspace(0,4.5833,10000)
+
 #formula for the linear regression with the sinus term
-X_Y_sinreg = a + b*X + c*np.sin(d*X + f)
+X_Y_sinreg = a + b*x_smooth + c*np.sin(d*x_smooth + f)
 
 #plotting the graph with the sinus term
-plt.plot (X, X_Y_sinreg)
+plt.plot (x_smooth, X_Y_sinreg)
 
 plt.show()
